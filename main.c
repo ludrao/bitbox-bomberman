@@ -98,23 +98,27 @@ void graph_line()
 
         for(int col=0; col<MWIDTH; col++)
         {
-            // Draw the ground (map)
-            int col2 = 2 *col;
-            memcpy(draw_buffer+XOFF+16*col2, _map_tiles_data[terrain_map[row2][col2]-1]+16*yoff2, 16*2);
-            col2++;
-            memcpy(draw_buffer+XOFF+16*col2, _map_tiles_data[terrain_map[row2][col2]-1]+16*yoff2, 16*2);
-            
-            // Draw the overlay
-            if (! (terrain_ovr[row][col]&0x80)) // bit7 set means nothing to draw
-            {
-                //memcpy(draw_buffer+XOFF+32*col, _map_ovr_data[terrain_ovr[row][col]]+32*yoff, 32*2);
-                const unsigned short *src = _map_ovr_data[terrain_ovr[row][col]]+32*yoff;
-                for(int i = 0; i < 32; i++) // TODO replace by a transparent blit function
+            if (!terrain_ovr[row][col]) { // overlay is covering everything ? render it, opaque
+                memcpy(draw_buffer+XOFF+32*col, _map_ovr_data[terrain_ovr[row][col]]+32*yoff, 32*2);
+            } else {
+                // Draw the ground (map)
+                int col2 = 2 *col;
+                memcpy(draw_buffer+XOFF+16*col2, _map_tiles_data[terrain_map[row2][col2]-1]+16*yoff2, 16*2);
+                col2++;
+                memcpy(draw_buffer+XOFF+16*col2, _map_tiles_data[terrain_map[row2][col2]-1]+16*yoff2, 16*2);
+                
+                // Draw the overlay
+                if (! (terrain_ovr[row][col]&0x80)) // bit7 set means nothing to draw
                 {
-                    unsigned short v = *(src+i);
-                    if (v&0x8000)
-                        *(draw_buffer+XOFF+32*col+i) = v;
-                } 
+                    //memcpy(draw_buffer+XOFF+32*col, _map_ovr_data[terrain_ovr[row][col]]+32*yoff, 32*2);
+                    const unsigned short *src = _map_ovr_data[terrain_ovr[row][col]]+32*yoff;
+                    for(int i = 0; i < 32; i++) // TODO replace by a transparent blit function
+                    {
+                        unsigned short v = *(src+i);
+                        if (v&0x8000)
+                            *(draw_buffer+XOFF+32*col+i) = v;
+                    } 
+                }
             }
         }
         

@@ -16,7 +16,7 @@ void text_init()
 
     for (int i=0; i<2; i++)
     {
-        print(2+i*21, 1, "L:  B:  F:  S:  ");
+        print(2+i*21, 1, "L   B   F   S   ");
     }
 }
 
@@ -25,10 +25,10 @@ void text_update()
     for (int i=0; i<2; i++)
     {
         Player *p = &player[i];
-        text_num(4+i*21, 1, p->life);
-        text_num(8+i*21, 1, p->rem_bombs);
-        text_num(12+i*21, 1, p->bomb_range+1);
-        text_num(16+i*21, 1, p->speed);
+        text_num(3+i*21, 1, p->life);
+        text_num(7+i*21, 1, p->rem_bombs);
+        text_num(11+i*21, 1, p->bomb_range+1);
+        text_num(15+i*21, 1, p->speed);
     }
     
 }
