@@ -1,5 +1,10 @@
 #BomberMan for BitBox#
 ------------------
+
+
+![Main Screen](art/screenshot1.png)
+
+
 This is a quick port of the classic Bomberman game on the BitBox console. The initial state is a bit raw, it is playable but there is no sound, no scores, no help.
 
 Lay bombs to blow up your oponent without blowing up yourself ! Along the way you'll find bonuses to either extend the bomb dammage range or lay more bombs at once...
